@@ -107,5 +107,25 @@ namespace UnitTestProject
                 }
             }
         }
+
+        // •	If the payment is for the video “Learning to Ski,” add a free “First Aid” video to the packing slip (the result of a court decision in 1997).
+        [TestMethod]
+        public void VideoLearningToSkiPayment()
+        {
+            PackingSlip packingSlip = new PackingSlip("Learning to Ski", "source", 
+                "destination", "department", new Video());
+            VideoPayment videoPayment = new VideoPayment();
+
+            if (videoPayment.MakePayment(packingSlip.Name, packingSlip.Source,
+                packingSlip.Destination, packingSlip.Department,
+                packingSlip.CommissionAgent.Name))
+            {
+                // Check that packing slips actually exist.
+                Assert.AreEqual(videoPayment.PackingSlips.Count > 0, true);
+                // Make sure the First Aid video got added.
+                Assert.AreEqual(videoPayment.PackingSlips.
+                    SelectMany(p => p.AddedProducts).Any(p => p.Name == "First Aid"), true);
+            }
+        }
     }
 }

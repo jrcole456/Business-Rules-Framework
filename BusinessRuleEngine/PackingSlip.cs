@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace BusinessRulesEngine
 {
     /// <summary>
+    /// Holds the packing slip details.
     /// 
     /// </summary>
     public class PackingSlip : IEquatable<PackingSlip>

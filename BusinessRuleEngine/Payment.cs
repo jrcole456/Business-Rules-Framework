@@ -203,7 +203,7 @@ namespace BusinessRulesEngine
         }
 
         /// <summary>
-        /// 
+        /// Implement a stub - it might be needed for future classes that inherit.
         /// </summary>
         /// <param name="agentName"></param>
         /// <returns></returns>
@@ -239,7 +239,8 @@ namespace BusinessRulesEngine
         }
 
         /// <summary>
-        /// 
+        /// Make a payment.
+        /// REturns true if success.
         /// </summary>
         /// <param name="packingName"></param>
         /// <param name="packingSource"></param>
@@ -292,7 +293,8 @@ namespace BusinessRulesEngine
         }
 
         /// <summary>
-        /// 
+        /// Make payment for Book.
+        /// Generate packing slips required and commission payment.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="source"></param>
@@ -338,7 +340,7 @@ namespace BusinessRulesEngine
         }
 
         /// <summary>
-        /// 
+        /// Generate commision payment.
         /// </summary>
         /// <param name="agentName"></param>
         /// <returns></returns>
@@ -476,6 +478,46 @@ namespace BusinessRulesEngine
             }
 
             return success;
+        }
+    }
+  
+    /// <summary>
+    /// The performs the video payment.
+    /// </summary>
+    public class VideoPayment : PhysicalProductPayment
+    {
+        /// <summary>
+        /// Make the payment for Video products.
+        /// Returns true if sucucss otherwise false for failure - then we have to look at logs.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <param name="department"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public override bool MakePayment(string name, string source, string destination, 
+            string department, string agentName)
+        {
+            bool isSuccess = true;
+            if (name == "Learning to Ski")
+            {
+                // Could use GeneratePackingSLip method to look better
+                // need more time to work on generate packing slip for this.
+                PackingSlips.Add(new PackingSlip(name, source, destination,
+                    department, new Video("First Aid")));
+            }
+            else
+            {
+                isSuccess = GeneratePackingSlip(name, source, destination, department, agentName);
+            }
+
+            if (!GeneratePackingSlip(name, source, destination, department, agentName))
+            {
+                isSuccess = false;
+            }
+
+            return isSuccess;
         }
     }
 }
