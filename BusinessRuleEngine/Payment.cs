@@ -26,6 +26,19 @@ namespace BusinessRulesEngine
     }
 
     /// <summary>
+    /// Book class.
+    /// </summary>
+    public class Book : Product
+    {
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
+        public Book() : base()
+        {
+        }
+    }
+
+    /// <summary>
     /// We must implement all these required mathods for our payment system.
     /// </summary>
     interface IPayment
@@ -136,6 +149,59 @@ namespace BusinessRulesEngine
             {
                 isSuccess = false;
                 Console.WriteLine(String.Format("{0} : ERROR : FAILED TO GENERATE PACKING SLIP", DateTime.UtcNow));
+            }
+            else
+            {
+                isSuccess = GenerateCommissionPayment(agentName);
+            }
+
+            return isSuccess;
+        }
+    }
+
+    /// <summary>
+    /// Holds the Physical Product - BOOK.
+    /// </summary>
+    public class BookPayment : PhysicalProductPayment
+    {
+        /// <summary>
+        /// For the Physical Product which is a BOOK - Create duplicate packing slips.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="destination"></param>
+        /// <param name="source"></param>
+        /// <param name="department"></param>
+        /// <returns></returns>
+        public override bool GeneratePackingSlip(string name, string source, string destination, 
+            string department, string agentName)
+        {
+            PackingSlip packingSlip = new PackingSlip(name, source, destination, 
+                "royalty", new Agent(agentName, true));
+
+            PackingSlips.Add(packingSlip);
+            PackingSlips.Add(packingSlip);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <param name="department"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public override bool MakePayment(string name, string source, string destination, 
+            string department, string agentName)
+        {
+            bool isSuccess = true;
+            Console.WriteLine(String.Format("{0} : MakePayment for BOOK", DateTime.UtcNow));
+            if (!GeneratePackingSlip(name, source, destination, department, agentName))
+            {
+                Console.WriteLine(String.Format("{0} : ERROR : in Make Payment for Book", DateTime.UtcNow));
+                isSuccess = false;
             }
             else
             {

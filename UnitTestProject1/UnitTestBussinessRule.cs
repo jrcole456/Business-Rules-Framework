@@ -38,5 +38,30 @@ namespace UnitTestProject
                 Assert.Fail("Failed to generate packing slip!");
             }
         }
+
+        //•	If the payment is for a book, create a duplicate packing slip for the royalty department.
+        [TestMethod]
+        public void BookGenerateDuplicatePackingSlip()
+        {
+            PackingSlip expectedPackingSlip = new PackingSlip("Physical_Product_Name",       
+                "SOURCE", "DESTINATION",        
+                "HR", new Agent("Smith", true));
+            BookPayment bookPayment = new BookPayment();
+            if (bookPayment.GeneratePackingSlip(expectedPackingSlip.Name,
+                expectedPackingSlip.Source,
+                expectedPackingSlip.Destination,
+                expectedPackingSlip.Department,
+                expectedPackingSlip.CommissionAgent.Name))
+            {
+                Assert.AreEqual(2, bookPayment.PackingSlips.Count);
+                Assert.AreEqual(bookPayment.PackingSlips.First(), 
+                    bookPayment.PackingSlips.Last());
+                Assert.AreEqual("royalty", bookPayment.PackingSlips.Last().Department);             
+            }
+            else
+            {
+                Assert.Fail("No packing slips exist!");
+            }
+        }
     }
 }
