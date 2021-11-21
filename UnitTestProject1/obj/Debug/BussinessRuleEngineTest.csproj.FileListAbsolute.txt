@@ -1,0 +1,13 @@
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\obj\Debug\BussinessRuleEngineTest.csprojResolveAssemblyReference.cache
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\bin\Debug\BusinessRuleEngine_2.dll
+C:\Users\mtk10402\Documents\Visual Studio 2013\Projects\BusinessRulesEngine\UnitTestProject1\bin\Debug\BusinessRuleEngine_2.pdb
+C:\Users\mtk10402\Desktop\New folder (5)\New folder\BusinessRulesEngine_1\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+C:\Users\mtk10402\Desktop\New folder (5)\New folder\BusinessRulesEngine_1\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+C:\Users\mtk10402\Desktop\New folder (5)\New folder\BusinessRulesEngine_1\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+C:\Users\mtk10402\Desktop\New folder (5)\New folder\BusinessRulesEngine_1\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+C:\Users\mtk10402\Desktop\New folder (5)\New folder\BusinessRulesEngine_1\UnitTestProject1\bin\Debug\BusinessRuleEngine.dll
+C:\Users\mtk10402\Desktop\New folder (5)\New folder\BusinessRulesEngine_1\UnitTestProject1\bin\Debug\BusinessRuleEngine.pdb
