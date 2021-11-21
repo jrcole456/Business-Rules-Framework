@@ -63,5 +63,49 @@ namespace UnitTestProject
                 Assert.Fail("No packing slips exist!");
             }
         }
+
+        //•	If the payment is for a membership, activate that membership.
+        [TestMethod]
+        public void MembershipActivateMembership()
+        {
+            MembershipPayment membership = new MembershipPayment();
+            Owner owner = new Owner("SMITH", "SMITH@oc.com");
+            if (membership.ActivateMembership(owner.Name, owner.Email))  
+            {
+                if (membership.Owners.Any())
+                {
+                    Assert.AreEqual(membership.Owners.First().Name, owner.Name);
+                    // Check this is now a member.
+                    Assert.AreEqual(membership.Owners.First().IsMember, true);
+                }
+                else
+                {
+                    Assert.Fail("Failed to add a member!");
+                }    
+            }
+        }
+
+        //••	If the payment is an upgrade to a membership, apply the upgrade.
+        [TestMethod]
+        public void MembershipUpgradeMembership()
+        {
+            MembershipPayment membership = new MembershipPayment();
+            Owner owner = new Owner("SMITH", "SMITH@oc.com");
+            if (membership.UpgradeMembership(owner.Email))
+            {
+                if (membership.Owners.Any())
+                {
+                    Assert.AreEqual(membership.Owners.First().Name, owner.Name);
+                    // Check this is now a member.
+                    Assert.AreEqual(membership.Owners.First().IsMember, true);
+                    // Check this member is upgraded.
+                    Assert.AreEqual(membership.Owners.First().IsUpgraded, true);
+                }
+                else
+                {
+                    Assert.Fail("Failed to add a member!");
+                }
+            }
+        }
     }
 }
