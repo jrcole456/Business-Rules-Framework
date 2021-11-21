@@ -9,7 +9,7 @@ namespace BusinessRulesEngine
     /// <summary>
     /// Holds the product name.
     /// </summary>
-    public abstract class Product
+    public class Product
     {
         /// <summary>
         /// The name of the product.
@@ -62,5 +62,87 @@ namespace BusinessRulesEngine
         /// <param name="agent"></param>
         /// <returns></returns>
         bool GenerateCommissionPayment(string agent);
+    }
+
+    /// <summary>
+    /// The base payment class for all Physical Products.
+    /// </summary>
+    public class PhysicalProductPayment : IPayment
+    {
+        /// <summary>
+        /// All the packing slips for this physical product.
+        /// </summary>
+        public List<PackingSlip> PackingSlips { protected set; get; }
+
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
+        public PhysicalProductPayment()
+        {
+            PackingSlips = new List<PackingSlip>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <returns></returns>
+        public virtual bool GenerateCommissionPayment(string agentName)
+        {
+            bool isSuccess = true;
+            // Can we generate the commision payment.                                      
+            // Generate the commision payment.
+            
+            return isSuccess;
+        }
+
+        /// <summary>
+        /// Generate the packing slip.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool GeneratePackingSlip(string packingName, string packingSource, string packingDestination, 
+            string department, string agentName)
+        {
+            PackingSlip packingSlip = new PackingSlip(packingName, packingSource, packingDestination,                 
+                department, new Agent(agentName, true));
+            // The name and desitnation are mandotary - MUST be defined.
+            if (!packingSlip.IsValid())
+            {
+                Console.WriteLine(String.Format("{0} : PACKING SLIP NAME / DESTINATION / DEPARTMENT NOT DEFINED", 
+                    DateTime.UtcNow));
+                return false;
+            }
+
+            PackingSlips.Add(packingSlip);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="packingName"></param>
+        /// <param name="packingSource"></param>
+        /// <param name="packingDestination"></param>
+        /// <param name="department"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public virtual bool MakePayment(string packingName, string packingSource, string packingDestination, 
+            string department, string agentName)
+        {
+            bool isSuccess = true;
+            if (!GeneratePackingSlip(packingName, packingSource, packingDestination, 
+                department, agentName))
+            {
+                isSuccess = false;
+                Console.WriteLine(String.Format("{0} : ERROR : FAILED TO GENERATE PACKING SLIP", DateTime.UtcNow));
+            }
+            else
+            {
+                isSuccess = GenerateCommissionPayment(agentName);
+            }
+
+            return isSuccess;
+        }
     }
 }

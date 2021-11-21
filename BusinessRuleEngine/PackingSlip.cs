@@ -9,8 +9,13 @@ namespace BusinessRulesEngine
     /// <summary>
     /// 
     /// </summary>
-    public class PackingSlip
+    public class PackingSlip : IEquatable<PackingSlip>
     {
+        /// <summary>
+        /// Holds a unique ID for the packing slip.
+        /// </summary>
+        private int UniqueID { get; set; }
+
         /// <summary>
         /// the name of the packing slip.
         /// </summary>
@@ -42,6 +47,24 @@ namespace BusinessRulesEngine
         public List<Product> AddedProducts { get; private set; }
 
         /// <summary>
+        /// A simple generate unique ID to identify the packing slip.
+        /// </summary>
+        /// <returns></returns>
+        private static int GetUniqueID()
+        {
+            return new Random().Next(0, Int16.MaxValue);
+        }
+
+        /// <summary>
+        /// Returns true if this packing slip is valid.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            return !String.IsNullOrEmpty(Name) || !String.IsNullOrEmpty(Department);
+        }
+
+        /// <summary>
         /// Default Constructor.
         /// </summary>
         public PackingSlip()
@@ -50,6 +73,7 @@ namespace BusinessRulesEngine
             Destination = String.Empty;
             Source = String.Empty;
             Department = String.Empty;
+            UniqueID = GetUniqueID();
             CommissionAgent = new Agent(); ;
             AddedProducts = new List<Product>();
         }
@@ -101,9 +125,72 @@ namespace BusinessRulesEngine
             Destination = other.Name;
             Source = other.Source;
             Department = other.Department;
+            UniqueID = other.UniqueID;
             CommissionAgent = new Agent(); ;
             AddedProducts = new List<Product>(other.AddedProducts);
         }
 
+        /// <summary>
+        /// GetHashCode method used for merging lists of configuration.
+        /// </summary>
+        /// <returns>The hash code.</returns>
+        public override int GetHashCode()
+        {
+            if (Object.ReferenceEquals(this, null)) return 0;
+            return Name.GetHashCode() +
+                Source.GetHashCode() +
+                Destination.GetHashCode() +
+                Department.GetHashCode() +        
+                CommissionAgent.Name.GetHashCode() +
+                AddedProducts.Select(s => s.Name).OrderBy(s => s).Aggregate(0, (x, y) => x.GetHashCode() ^ y.GetHashCode());
+        }
+
+        /// <summary>
+        /// The Equals method.
+        /// </summary>
+        public bool Equals(PackingSlip other)
+        {
+            return (this == other);
+        }
+
+        /// <summary>
+        /// Override the Equals method.
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as PackingSlip);
+        }
+
+        /// <summary>
+        /// Equals operator.
+        /// </summary>
+        public static bool operator ==(PackingSlip ts1, PackingSlip ts2)
+        {
+            if (object.ReferenceEquals(ts1, ts2))
+            {
+                return true;
+            }
+            // If the test system are both null
+            if ((object.ReferenceEquals(ts1, null)) || (object.ReferenceEquals(ts2, null)))
+            {
+                return false;
+            }
+
+            // Make the equality test system.
+            return (ts1.Name == ts2.Name) &&
+                (ts1.Source == ts2.Source) &&
+                (ts1.Destination == ts2.Destination) &&
+                (ts1.Department == ts2.Department) &&
+                (ts1.CommissionAgent.Name == ts2.CommissionAgent.Name) &&
+                (ts1.AddedProducts.Select(a => a.Name).SequenceEqual(ts2.AddedProducts.Select(a => a.Name)));
+        }
+
+        /// <summary>
+        /// Not equals operator.
+        /// </summary>
+        public static bool operator !=(PackingSlip ts1, PackingSlip ts2)
+        {
+            return !(ts1 == ts2);
+        }
     }
 }
