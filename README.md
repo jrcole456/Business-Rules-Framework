@@ -11,6 +11,10 @@ Imagine you’re writing an order processing application for a large company. In
 •	If the payment is for a physical product or a book, generate a commission payment to the agent. Design a new system which can handle these rules and yet open to extension to new rules
 
 To Run:
+Written in C#. I developed in Micorosft Visual Studio 2013 and was alse able to build and run in Microsoft Visual Studio 2019.
 BusinessRulesEngine.sln holds two projects.
 Business-Rules-Framework.csproj : contains the business rules framework.
 BusinessRuleEngineTest.csproj : contains the unit tests to ensure fucntionality is not broken in future.
+
+Should run the UnitTestProject1 which runs the unit tests.
+The BusinessRulesEngine is a shared DLL.
